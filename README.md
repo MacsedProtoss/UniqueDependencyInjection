@@ -1,3 +1,4 @@
 # UniqueDependencyInjection
 
-A description of this package.
+WIP：Unique 组件补全计划 依赖注入
+
