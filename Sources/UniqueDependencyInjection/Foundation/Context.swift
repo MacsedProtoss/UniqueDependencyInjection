@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UDIContext {
+public class UDIContext {
     
     private var dependencies = [String:UDIInjectObject]()
     
@@ -19,8 +19,16 @@ class UDIContext {
         dependencies.removeValue(forKey: "\(aProtocol)")
     }
     
-    func link(_ aProtocol : Any) -> UDIInjectObject? {
-        return dependencies["\(aProtocol)"]
+    func link<T:UDIInjectObject>(_ aProtocol : Any) -> T? {
+        if dependencies["\(aProtocol)"] != nil{
+            if let obj = dependencies["\(aProtocol)"] as? T{
+                return obj
+            }else{
+                return nil
+            }
+        }else{
+            return nil
+        }
     }
     
 }
