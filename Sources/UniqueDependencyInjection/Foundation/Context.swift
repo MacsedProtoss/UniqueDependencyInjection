@@ -9,9 +9,9 @@ import Foundation
 
 public class UDIContext {
     
-    private var dependencies = [String:UDIInjectObject]()
+    private var dependencies = [String:UDIObject]()
     
-    func bind<T:UDIInjectObject>(property : T, aProtocol : Any){
+    func bind<T:UDIObject>(property : T, aProtocol : Any){
         dependencies["\(aProtocol)"] = property
     }
     
@@ -19,7 +19,7 @@ public class UDIContext {
         dependencies.removeValue(forKey: "\(aProtocol)")
     }
     
-    func link<T:UDIInjectObject>(_ aProtocol : Any) -> T? {
+    func link<T:UDIObject>(_ aProtocol : Any) -> T? {
         if dependencies["\(aProtocol)"] != nil{
             if let obj = dependencies["\(aProtocol)"] as? T{
                 return obj
@@ -32,3 +32,5 @@ public class UDIContext {
     }
     
 }
+
+let AppContext = UDIContext()
