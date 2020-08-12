@@ -7,6 +7,19 @@
 //
 import Foundation
 
+///基础配置
+///
+///可以调节部分behavior
+public class UDI{
+    ///是否启用调试下Context设置检测
+    ///
+    ///启用后在调试下，如果Context未设置就调用相关能力将会有警告内容
+    public static var enableUsageDetection : Bool = false
+}
+
+
+
+
 ///UDI base协议 **被注入及获取注入的对象都需要**
 ///
 ///任何使用UniqueDI的对象都应该实现这个协议
@@ -40,6 +53,7 @@ extension UDIObject{
     ///
     ///注意，property的引用类型weak/strong会影响到实例的生命周期
     public func UDILink<T:UDIObject>(property:inout T?,aProtocol:Any){
+        usageCheck()
         if property == nil{
             return
         }
@@ -62,6 +76,7 @@ extension UDIObject{
     ///
     ///注意，使用此方法获取实例时，应直接在使用后调用其能力而非将其引用存储下来
     public func UDILinkInLine<T:UDIObject>(aProtocol:T) -> T?{
+        usageCheck()
         if (self.attachedContext != nil){
             guard let _property = UDIManager.linkObj(in: self.attachedContext! , for: aProtocol) else {
                 return nil
@@ -79,6 +94,7 @@ extension UDIObject{
     ///
     ///注册的上下文是调用本方法的实例的Context
     public func UDIBind<T:UDIObject>(property: T,aProtocol:Any){
+        usageCheck()
         if (self.attachedContext != nil){
             UDIManager.bindObj(in: self.attachedContext!, for: aProtocol, with: property)
         }else{
@@ -86,6 +102,13 @@ extension UDIObject{
         }
     }
     
+    private func usageCheck(){
+        if UDI.enableUsageDetection {
+            if self.attachedContext == nil{
+                //MARK:TODO, call alert
+            }
+        }
+    }
 }
 
 
