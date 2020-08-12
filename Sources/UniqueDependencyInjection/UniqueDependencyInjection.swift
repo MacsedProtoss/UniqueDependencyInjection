@@ -10,7 +10,7 @@ import Foundation
 ///UDI base协议 **被注入及获取注入的对象都需要**
 ///
 ///任何使用UniqueDI的对象都应该实现这个协议
-public protocol UDIObject{
+public protocol UDIObject : AnyObject {
     ///关联上下文后应执行的内容 **自动调用**
     ///
     ///修改可注入对象的attachedContext属性后将会自动调用
@@ -75,6 +75,9 @@ extension UDIObject{
         }
     }
 
+    ///注册实现Protocol的实例
+    ///
+    ///注册的上下文是调用本方法的实例的Context
     public func UDIBind<T:UDIObject>(property: T,aProtocol:Any){
         if (self.attachedContext != nil){
             UDIManager.bindObj(in: self.attachedContext!, for: aProtocol, with: property)

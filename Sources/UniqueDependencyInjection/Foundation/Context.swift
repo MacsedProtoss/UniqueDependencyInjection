@@ -9,7 +9,7 @@ import Foundation
 
 public class UDIContext {
     
-    private var dependencies = [String:UDIObject]()
+    private var dependencies = WeakValueDictionary<String,UDIObject>()
     
     func bind<T:UDIObject>(property : T, aProtocol : Any){
         dependencies["\(aProtocol)"] = property
