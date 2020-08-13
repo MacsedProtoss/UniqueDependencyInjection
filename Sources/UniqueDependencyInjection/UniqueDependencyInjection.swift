@@ -53,7 +53,7 @@ extension UDIObject{
     ///
     ///注意，property的引用类型weak/strong会影响到实例的生命周期
     public func UDILink<T:UDIObject>(property:inout T?,aProtocol:Any){
-        usageCheck()
+        usageCheck(aProtocol)
         if property == nil{
             return
         }
@@ -76,7 +76,7 @@ extension UDIObject{
     ///
     ///注意，使用此方法获取实例时，应直接在使用后调用其能力而非将其引用存储下来
     public func UDILinkInLine<T:UDIObject>(aProtocol:T) -> T?{
-        usageCheck()
+        usageCheck(aProtocol)
         if (self.attachedContext != nil){
             guard let _property = UDIManager.linkObj(in: self.attachedContext! , for: aProtocol) else {
                 return nil
@@ -94,7 +94,7 @@ extension UDIObject{
     ///
     ///注册的上下文是调用本方法的实例的Context
     public func UDIBind<T:UDIObject>(property: T,aProtocol:Any){
-        usageCheck()
+        usageCheck(aProtocol)
         if (self.attachedContext != nil){
             UDIManager.bindObj(in: self.attachedContext!, for: aProtocol, with: property)
         }else{
@@ -102,12 +102,16 @@ extension UDIObject{
         }
     }
     
-    private func usageCheck(){
+    private func usageCheck(_ aProtocol:Any){
+        #if DEBUG
         if UDI.enableUsageDetection {
             if self.attachedContext == nil{
-                //MARK:TODO, call alert
+                UDIDebugAlertMananger.show(withHost: self, forProtocol: aProtocol)
             }
         }
+        #else
+        return
+        #endif
     }
 }
 
