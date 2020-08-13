@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  UDIContext.swift
 //  
 //
 //  Created by Macsed on 2020/8/11.
@@ -33,6 +33,16 @@ public class UDIContext {
         }
     }
     
+    internal func findSubContext(withTag tag:String) -> UDIContext? {
+        if let index = self.subContexts.firstIndex(where: { (_context) -> Bool in
+            return _context.tag == tag
+        }){
+            return self.subContexts[index]
+        }else{
+            return nil
+        }
+    }
+    
     public func addSubContext(_ context:UDIContext){
         if let _ = self.subContexts.firstIndex(where: { (_context) -> Bool in
             return _context.tag == context.tag
@@ -52,6 +62,8 @@ public class UDIContext {
             return _context.tag == tag
         }
     }
+    
+    
     
     public init(withTag tag:String){
         self.tag = tag

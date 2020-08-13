@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  UDIDebugAlertMananger.swift
 //  
 //
 //  Created by Macsed on 2020/8/12.
