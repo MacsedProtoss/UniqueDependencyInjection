@@ -13,6 +13,16 @@ class UDIDebugAlertMananger {
     static func show(withHost host:Any,forProtocol aProtocol:Any){
         let alertVC = UIAlertController(title: "UniqueDI使用方法不正确", message: "\(host)在使用UniqueDI时方法不正确，在操作\(aProtocol)时未关联上下文，已默认为其指定AppContext，但这会带来使用隐患，可能导致bug", preferredStyle: .alert)
         
+        showAlert(for: alertVC)
+    }
+    
+    static func show(withHost host:Any,forUsage usage:String){
+        let alertVC = UIAlertController(title: "UniqueDI使用方法不正确", message: "\(host)在使用UniqueDI时方法不正确，在操作\(usage)时未关联上下文，已默认为其指定AppContext，但这会带来使用隐患，可能导致bug", preferredStyle: .alert)
+        
+        showAlert(for: alertVC)
+    }
+    
+    private static func showAlert(for vc:UIAlertController){
         var showingVC : UIViewController!
         if #available(iOS 13, *) {
             let keyWindow = UIApplication.shared.connectedScenes
@@ -38,10 +48,7 @@ class UDIDebugAlertMananger {
         if (showingVC == nil){
             return
         }
-        showingVC.present(alertVC, animated: true, completion: nil)
+        showingVC.present(vc, animated: true, completion: nil)
     }
-    
-    
-    
     
 }

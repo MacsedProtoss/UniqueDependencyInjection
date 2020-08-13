@@ -102,11 +102,34 @@ extension UDIObject{
         }
     }
     
+    
+    public func UDIFind(_ tag:String) -> UDIContext? {
+        usageCheck("寻找tag为\(tag)的Context")
+        if self.attachedContext != nil{
+            return UDIManager.getContext(in: self.attachedContext!, for: tag)
+        }else{
+            return UDIManager.getContext(in: AppContext, for: tag)
+        }
+        
+    }
+    
     private func usageCheck(_ aProtocol:Any){
         #if DEBUG
         if UDI.enableUsageDetection {
             if self.attachedContext == nil{
                 UDIDebugAlertMananger.show(withHost: self, forProtocol: aProtocol)
+            }
+        }
+        #else
+        return
+        #endif
+    }
+    
+    private func usageCheck(_ usage:String){
+        #if DEBUG
+        if UDI.enableUsageDetection {
+            if self.attachedContext == nil{
+                UDIDebugAlertMananger.show(withHost: self, forUsage: usage)
             }
         }
         #else
