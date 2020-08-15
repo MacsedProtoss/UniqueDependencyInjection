@@ -66,7 +66,7 @@ public class UDIContext {
     private func cleanedDesc(_ aProtocol:Any) -> String{
         var desc = "\(aProtocol)"
         if let index = desc.lastIndex(of: "."){
-            desc = desc[index..<desc.endIndex]
+            desc = String(desc[index..<desc.endIndex])
         }
         return desc
     }
