@@ -23,6 +23,9 @@ class UDIDebugAlertMananger {
     }
     
     private static func showAlert(for vc:UIAlertController){
+        
+        vc.addAction(.init(title: "OK", style: .default, handler: nil))
+        
         var showingVC : UIViewController!
         if #available(iOS 13, *) {
             let keyWindow = UIApplication.shared.connectedScenes
