@@ -52,21 +52,21 @@ extension UDIObject{
     ///获取实现Protocol的实例并将其赋值给Property **需要声明该变量所遵循的协议**
     ///
     ///注意，property的引用类型weak/strong会影响到实例的生命周期
-    public func UDILink<T>(property:inout T?){
+    public func UDILink<T>(property:inout T?,aProtocol:Any){
         usageCheck(T.self)
         
         if (self.attachedContext != nil){
-            guard let _property = UDIManager.linkObj(in: self.attachedContext! , for: T.self) else {
+            guard let _property = UDIManager.linkObj(in: self.attachedContext! , for: aProtocol) else {
                 property = nil
                 return
             }
-            property = _property as? T
+            property = _property as! T
         }else{
-            guard let _property = UDIManager.linkObj(in: AppContext , for: T.self) else {
+            guard let _property = UDIManager.linkObj(in: AppContext , for: aProtocol) else {
                 property = nil
                 return
             }
-            property = _property as? T
+            property = _property as! T
         }
     }
     
