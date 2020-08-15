@@ -56,13 +56,13 @@ extension UDIObject{
         usageCheck(T.self)
         
         if (self.attachedContext != nil){
-            guard let _property = UDIManager.linkObj(in: self.attachedContext! , for: T.self) else {
+            guard let _property = UDIManager.linkObj(in: self.attachedContext! , for: T.Type.self) else {
                 property = nil
                 return
             }
             property = _property as? T
         }else{
-            guard let _property = UDIManager.linkObj(in: AppContext , for: T.self) else {
+            guard let _property = UDIManager.linkObj(in: AppContext , for: T.Type.self) else {
                 property = nil
                 return
             }
