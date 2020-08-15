@@ -10,20 +10,39 @@ import Foundation
 class UDIManager {
     
     static func linkObj<T>(in context:UDIContext,for aProtocol:T) -> T? {
-        return nil
+        return findObjInWholeTree(in: context, for: aProtocol)
     }
     
-    static func bindObj<T>(in context:UDIContext, for aProtocol:Any, with property:T) {
-        
+    static func bindObj<T:UDIObject>(in context:UDIContext, for aProtocol:Any, with property:T) {
+        context.bind(property: property, aProtocol: aProtocol)
     }
     
     static func getContext(in parentContext:UDIContext,for tag:String) -> UDIContext? {
         return findContextInWholeTree(in: parentContext, for: tag)
     }
     
+    static private func findObjInWholeTree<T>(in parentContext:UDIContext,for aProtocol:T) -> T?{
+        var queue = Queue<UDIContext>()
+        queue.push(parentContext)
+        
+        while queue.remainCount > 0{
+            guard let context = queue.pop() else{
+                continue
+            }
+            
+            if let result = context.link(aProtocol) {
+                return result
+            }else{
+                for subContext in context.subContexts{
+                    queue.push(subContext)
+                }
+            }
+        }
+        return nil
+    }
+    
     static private func findContextInWholeTree(in parentContext:UDIContext,for tag:String) -> UDIContext! {
         var queue = Queue<UDIContext>()
-        
         queue.push(parentContext)
         
         while queue.remainCount > 0 {

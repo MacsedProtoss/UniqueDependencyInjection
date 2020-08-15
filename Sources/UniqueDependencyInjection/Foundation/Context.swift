@@ -21,7 +21,7 @@ public class UDIContext {
         dependencies.removeValue(forKey: "\(aProtocol)")
     }
     
-    internal func link<T:UDIObject>(_ aProtocol : Any) -> T? {
+    internal func link<T>(_ aProtocol : T) -> T? {
         if dependencies["\(aProtocol)"] != nil{
             if let obj = dependencies["\(aProtocol)"] as? T{
                 return obj
