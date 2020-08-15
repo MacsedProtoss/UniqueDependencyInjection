@@ -14,16 +14,16 @@ public class UDIContext {
     internal var subContexts = [UDIContext]()
     
     internal func bind<T:UDIObject>(property : T, aProtocol : Any){
-        dependencies["\(aProtocol)"] = property
+        dependencies[self.cleanedDesc(aProtocol)] = property
     }
     
     internal func remove(_ aProtocol : Any){
-        dependencies.removeValue(forKey: "\(aProtocol)")
+        dependencies.removeValue(forKey: self.cleanedDesc(aProtocol))
     }
     
     internal func link<T>(_ aProtocol : T) -> T? {
-        if dependencies["\(aProtocol)"] != nil{
-            if let obj = dependencies["\(aProtocol)"] as? T{
+        if dependencies[self.cleanedDesc(aProtocol)] != nil{
+            if let obj = dependencies[self.cleanedDesc(aProtocol)] as? T{
                 return obj
             }else{
                 return nil
@@ -63,7 +63,13 @@ public class UDIContext {
         }
     }
     
-    
+    private func cleanedDesc(_ aProtocol:Any) -> String{
+        var desc = "\(aProtocol)"
+        if let index = desc.lastIndex(of: "."){
+            desc = desc[index..<desc.endIndex]
+        }
+        return desc
+    }
     
     public init(withTag tag:String){
         self.tag = tag
