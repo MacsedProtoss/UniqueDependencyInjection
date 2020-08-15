@@ -52,7 +52,7 @@ extension UDIObject{
     ///获取实现Protocol的实例并将其赋值给Property
     ///
     ///注意，property的引用类型weak/strong会影响到实例的生命周期
-    public func UDILink<T:UDIObject>(property:inout T?,aProtocol:Any){
+    public func UDILink<T>(property:inout T?,aProtocol:Any){
         usageCheck(aProtocol)
         if property == nil{
             return
@@ -75,7 +75,7 @@ extension UDIObject{
     ///获取实现Protocol的实例
     ///
     ///注意，使用此方法获取实例时，应直接在使用后调用其能力而非将其引用存储下来
-    public func UDILinkInLine<T:UDIObject>(aProtocol:T) -> T?{
+    public func UDILinkInLine<T>(aProtocol:T) -> T?{
         usageCheck(aProtocol)
         if (self.attachedContext != nil){
             guard let _property = UDIManager.linkObj(in: self.attachedContext! , for: aProtocol) else {
