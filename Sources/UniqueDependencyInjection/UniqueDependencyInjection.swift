@@ -52,36 +52,36 @@ extension UDIObject{
     ///获取实现Protocol的实例并将其赋值给Property **需要声明该变量所遵循的协议**
     ///
     ///注意，property的引用类型weak/strong会影响到实例的生命周期
-    public func UDILink<T>(property:inout T?,aProtocol:Any){
+    public func UDILink<T>(property:inout T?){
         usageCheck(T.self)
-        
+        //MARK:TODO need fix,cast will always fail
         if (self.attachedContext != nil){
-            guard let _property = UDIManager.linkObj(in: self.attachedContext! , for: aProtocol) else {
+            guard let _property : T = UDIManager.linkObj(in: self.attachedContext!) else {
                 property = nil
                 return
             }
-            property = _property as! T
+            property = _property
         }else{
-            guard let _property = UDIManager.linkObj(in: AppContext , for: aProtocol) else {
+            guard let _property : T = UDIManager.linkObj(in: AppContext ) else {
                 property = nil
                 return
             }
-            property = _property as! T
+            property = _property
         }
     }
     
     ///获取实现Protocol的实例
     ///
     ///注意，使用此方法获取实例时，应直接在使用后调用其能力而非将其引用存储下来
-    public func UDILinkInLine<T>(aProtocol:T) -> T?{
-        usageCheck(aProtocol)
+    public func UDILinkInLine<T>() -> T?{
+        usageCheck(T.self)
         if (self.attachedContext != nil){
-            guard let _property = UDIManager.linkObj(in: self.attachedContext! , for: aProtocol) else {
+            guard let _property : T = UDIManager.linkObj(in: self.attachedContext!) else {
                 return nil
             }
             return _property
         }else{
-            guard let _property = UDIManager.linkObj(in: AppContext , for: aProtocol) else {
+            guard let _property : T = UDIManager.linkObj(in: AppContext) else {
                 return nil
             }
             return _property
@@ -140,6 +140,9 @@ extension UDIObject{
 
 
 @propertyWrapper
-struct UDIInject<T:UDIObject> {
-    let wrappedValue : T
+struct UDIGlobal<T:UDIObject> {
+    let wrappedValue : T?
+    init() {
+        wrappedValue = AppContext.link()
+    }
 }

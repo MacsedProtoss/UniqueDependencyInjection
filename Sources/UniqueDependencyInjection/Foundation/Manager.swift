@@ -9,8 +9,8 @@ import Foundation
 
 class UDIManager {
     
-    static func linkObj<T>(in context:UDIContext,for aProtocol:T) -> T? {
-        return findObjInWholeTree(in: context, for: aProtocol)
+    static func linkObj<T>(in context:UDIContext) -> T? {
+        return findObjInWholeTree(in: context)
     }
     
     static func bindObj<T:UDIObject>(in context:UDIContext, for aProtocol:Any, with property:T) {
@@ -21,7 +21,7 @@ class UDIManager {
         return findContextInWholeTree(in: parentContext, for: tag)
     }
     
-    static private func findObjInWholeTree<T>(in parentContext:UDIContext,for aProtocol:T) -> T?{
+    static private func findObjInWholeTree<T>(in parentContext:UDIContext) -> T?{
         var queue = Queue<UDIContext>()
         queue.push(parentContext)
         
@@ -30,7 +30,7 @@ class UDIManager {
                 continue
             }
             
-            if let result = context.link(aProtocol) {
+            if let result : T = context.link() {
                 return result
             }else{
                 for subContext in context.subContexts{
