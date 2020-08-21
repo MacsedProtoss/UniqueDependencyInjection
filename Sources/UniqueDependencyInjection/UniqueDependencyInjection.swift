@@ -73,7 +73,7 @@ extension UDIObject{
     ///获取实现Protocol的实例
     ///
     ///注意，使用此方法获取实例时，应直接在使用后调用其能力而非将其引用存储下来
-    public func UDILinkInLine<T>() -> T?{
+    public func UDILinkInLine<T>(_ aProtocol:T.Type) -> T?{
         usageCheck(T.self)
         if (self.attachedContext != nil){
             guard let _property : T = UDIManager.linkObj(in: self.attachedContext!) else {
