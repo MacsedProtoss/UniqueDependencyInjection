@@ -39,7 +39,7 @@ class myClass : UDIObject,myProtocol{
 ```
 
 ### Bind
-将依赖注入进当前所在上下文（UDIContext）
+将依赖注册进当前所在上下文（UDIContext）
 ```Swift
 // UDIBind(PROPERTY,PROTOCOL)
 
