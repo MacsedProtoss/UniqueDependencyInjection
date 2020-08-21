@@ -65,11 +65,6 @@ public class UDIContext {
     
     private func wrappedKey(_ aProtocol:Any) -> String{
         return String(reflecting: aProtocol)
-//        var desc = "\(aProtocol)"
-//        if let index = desc.lastIndex(of: "."){
-//            desc = String(desc[index..<desc.endIndex])
-//        }
-//        return desc
     }
     
     public init(withTag tag:String){

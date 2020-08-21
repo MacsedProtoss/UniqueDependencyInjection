@@ -14,11 +14,7 @@ final class UniqueDependencyInjectionTests: XCTestCase,UDIObject {
         // results.
         let a = myClass()
         a.attachedContext = self.attachedContext
-        var b : myProtocol!
-        b = UDILinkInLine()
-        if (b != nil){
-            b!.hello()
-        }
+        UDILinkInLine(myProtocol.self)?.hello()
     }
 
     static var allTests = [
