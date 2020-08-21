@@ -22,7 +22,7 @@
 正常使用时，应当confirm to UDIObject这一协议
 ```Swift
 protocol myProtocol{
-    func YOURFUNC()
+    func myFunc()
 }
 
 class myClass : UDIObject,myProtocol{
@@ -32,7 +32,7 @@ class myClass : UDIObject,myProtocol{
 
     var _attachedContext: UDIContext? //请不要直接使用该属性
     
-    func YOURFUNC(){
+    func myFunc(){
         //这是你的协议所定义的能力
     }
 }
@@ -58,16 +58,16 @@ UDILink
 
 var a : myProtocol?
 UDILink(&a)
+a?.myFunc()
 
 ```
 
 
 UDILinkInLine
 ```Swift
-// UDILinkInLine() 
+// UDILinkInLine(PROTOCOL) 
 
-var a : myProtocol?
-a = UDILinkInLine()
+UDILinkInLine(myProtocol.self)?.myFunc()
 
 ```
 
