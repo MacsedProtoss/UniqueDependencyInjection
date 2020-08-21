@@ -3,9 +3,6 @@
 ## Unique 组件补全计划 
 依赖注入
 
-## How to Use
-已接入Swift Package Manager，使用SPM直接导入本项目即可
-
 ## Progress
 
 - [x] Bind & Link
@@ -17,6 +14,9 @@
 ## Requirements
 - Swift 5.0+
 - iOS 10.0+
+
+## How to Use
+已接入Swift Package Manager，使用SPM直接导入本项目即可
 
 ### 前置条件
 正常使用时，应当confirm to UDIObject这一协议
