@@ -27,6 +27,7 @@ public protocol UDIObject : AnyObject {
     ///关联上下文后应执行的内容 **自动调用**
     ///
     ///修改可注入对象的attachedContext属性后将会自动调用
+    ///推荐在这里执行 UDIBind、UDILink操作
     func didAttachContext()
     ///目前关联的上下文 UDIContext **不推荐直接使用**
     ///
@@ -54,7 +55,6 @@ extension UDIObject{
     ///注意，property的引用类型weak/strong会影响到实例的生命周期
     public func UDILink<T>(property:inout T?){
         usageCheck(T.self)
-        //MARK:TODO need fix,cast will always fail
         if (self.attachedContext != nil){
             guard let _property : T = UDIManager.linkObj(in: self.attachedContext!) else {
                 property = nil
@@ -138,11 +138,17 @@ extension UDIObject{
     }
 }
 
-
+///UDI 快速全局注入
+///
+///使用包装属性快速从**App Context**里面获取依赖
 @propertyWrapper
-struct UDIGlobal<T:UDIObject> {
-    let wrappedValue : T?
-    init() {
-        wrappedValue = AppContext.link()
+public struct UDIGLink<T> {
+    public var wrappedValue : T? {
+        get{
+            return UDIManager.linkObj(in: AppContext)
+        }
+    }
+    public init(_ aProtocol:T.Type) {
+        
     }
 }

@@ -9,7 +9,7 @@
 - [x] FindContext
 - [x] Context隔离
 - [ ] Debug Tools
-- [ ] 快速全局依赖注入
+- [x] 快速全局依赖注入
 
 ## Requirements
 - Swift 5.0+
@@ -27,7 +27,7 @@ protocol myProtocol{
 
 class myClass : UDIObject,myProtocol{
     func didAttachContext() {
-        //这里通常是将自身bind上去，如果不需要bind自身，则此处留空即可
+        //推荐在此处进行 UDILink、UDIBind
     }
 
     var _attachedContext: UDIContext? //请不要直接使用该属性
@@ -72,7 +72,13 @@ UDILinkInLine(myProtocol.self)?.myFunc()
 ```
 
 ### 快速全局依赖注入
-Under constructing
+@UDIGLink **本方法会从AppContext注入依赖**
+```Swift
+//@UDIGLink(PROTOCOL)
+
+@UDIGLink(myProtocol.self) var a : myProtocol?
+
+```
 
 
 ## License
