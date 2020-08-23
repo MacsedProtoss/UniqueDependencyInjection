@@ -142,7 +142,7 @@ extension UDIObject{
 @propertyWrapper
 public struct UDIGInject<T> {
     public let wrappedValue : T?
-    public init() {
+    public init(_ aProtocol:T.Type) {
         wrappedValue = UDIManager.linkObj(in: AppContext)
     }
 }
