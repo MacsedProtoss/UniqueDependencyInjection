@@ -9,7 +9,7 @@
 - [x] FindContext
 - [x] Context隔离
 - [ ] Debug Tools
-- [ ] 快速全局依赖注入
+- [x] 快速全局依赖注入
 
 ## Requirements
 - Swift 5.0+
@@ -72,7 +72,13 @@ UDILinkInLine(myProtocol.self)?.myFunc()
 ```
 
 ### 快速全局依赖注入
-Under constructing
+@UDIGLink **本方法会从AppContext注入依赖**
+```Swift
+//@UDIGLink(PROTOCOL)
+
+@UDIGLink(myProtocol.self) var a : myProtocol?
+
+```
 
 
 ## License

@@ -27,6 +27,7 @@ public protocol UDIObject : AnyObject {
     ///关联上下文后应执行的内容 **自动调用**
     ///
     ///修改可注入对象的attachedContext属性后将会自动调用
+    ///推荐在这里执行 UDIBind、UDILink操作
     func didAttachContext()
     ///目前关联的上下文 UDIContext **不推荐直接使用**
     ///
