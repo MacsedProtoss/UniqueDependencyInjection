@@ -138,9 +138,11 @@ extension UDIObject{
     }
 }
 
-
+///UDI 快速全局注入
+///
+///使用包装属性快速从**App Context**里面获取依赖
 @propertyWrapper
-public struct UDIGInject<T> {
+public struct UDIGLink<T> {
     public let wrappedValue : T?
     public init(_ aProtocol:T.Type) {
         wrappedValue = UDIManager.linkObj(in: AppContext)
