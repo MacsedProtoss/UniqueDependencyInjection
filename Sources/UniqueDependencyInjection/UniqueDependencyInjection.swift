@@ -143,8 +143,12 @@ extension UDIObject{
 ///使用包装属性快速从**App Context**里面获取依赖
 @propertyWrapper
 public struct UDIGLink<T> {
-    public let wrappedValue : T?
+    public var wrappedValue : T? {
+        get{
+            return UDIManager.linkObj(in: AppContext)
+        }
+    }
     public init(_ aProtocol:T.Type) {
-        wrappedValue = UDIManager.linkObj(in: AppContext)
+        
     }
 }
