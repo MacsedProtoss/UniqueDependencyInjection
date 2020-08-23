@@ -54,7 +54,6 @@ extension UDIObject{
     ///注意，property的引用类型weak/strong会影响到实例的生命周期
     public func UDILink<T>(property:inout T?){
         usageCheck(T.self)
-        //MARK:TODO need fix,cast will always fail
         if (self.attachedContext != nil){
             guard let _property : T = UDIManager.linkObj(in: self.attachedContext!) else {
                 property = nil
