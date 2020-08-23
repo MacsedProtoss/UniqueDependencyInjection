@@ -27,7 +27,7 @@ protocol myProtocol{
 
 class myClass : UDIObject,myProtocol{
     func didAttachContext() {
-        //这里通常是将自身bind上去，如果不需要bind自身，则此处留空即可
+        //推荐在此处进行 UDILink、UDIBind
     }
 
     var _attachedContext: UDIContext? //请不要直接使用该属性
