@@ -140,9 +140,9 @@ extension UDIObject{
 
 
 @propertyWrapper
-struct UDIGlobal<T:UDIObject> {
-    let wrappedValue : T?
-    init() {
-        wrappedValue = AppContext.link()
+public struct UDIGInject<T:UDIObject> {
+    public let wrappedValue : T?
+    public init() {
+        wrappedValue = UDIManager.linkObj(in: AppContext)
     }
 }
