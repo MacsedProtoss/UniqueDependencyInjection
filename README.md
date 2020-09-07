@@ -41,7 +41,16 @@ class myClass : UDIObject,myProtocol{
 ### Bind
 将依赖注册进当前所在上下文（UDIContext）
 ```Swift
-// UDIBind(PROPERTY,PROTOCOL)
+// UDIBind(PROPERTY,PROTOCOL) 自动移除旧上下文注册信息
+
+let a = myClass()
+UDIBind(a,myProtocol)
+
+
+```
+
+```Swift
+// UDIMultiBind(PROPERTY,PROTOCOL) 允许多上下文注册
 
 let a = myClass()
 UDIBind(a,myProtocol)

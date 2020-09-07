@@ -21,6 +21,10 @@ class UDIManager {
         return findContextInWholeTree(in: parentContext, for: tag)
     }
     
+    static func cancelBind(in context:UDIContext,for aProtocol:Any){
+        context.remove(aProtocol)
+    }
+    
     static private func findObjInWholeTree<T>(in parentContext:UDIContext) -> T?{
         var queue = Queue<UDIContext>()
         queue.push(parentContext)
