@@ -90,8 +90,23 @@ extension UDIObject{
 
     ///注册实现Protocol的实例
     ///
-    ///注册的上下文是调用本方法的实例的Context
+    ///注册的上下文是调用本方法的实例的Context，若之前注册在其他上下文则会被从旧上下文移除
     public func UDIBind<T:UDIObject>(property: T,aProtocol:Any){
+        usageCheck(aProtocol)
+        if let _property : T = UDIManager.linkObj(in: AppContext){
+            UDIManager.cancelBind(in: _property.attachedContext ?? AppContext, for: aProtocol)
+        }
+        if (self.attachedContext != nil){
+            UDIManager.bindObj(in: self.attachedContext!, for: aProtocol, with: property)
+        }else{
+            UDIManager.bindObj(in: AppContext, for: aProtocol, with: property)
+        }
+    }
+    
+    ///多重注册实现Protocol的实例
+    ///
+    ///注册的上下文是调用本方法的实例的Context，可以同时注册在多个上下文，**可能引起非预期效果**
+    public func UDIMultiBind<T:UDIObject>(property: T,aProtocol:Any){
         usageCheck(aProtocol)
         if (self.attachedContext != nil){
             UDIManager.bindObj(in: self.attachedContext!, for: aProtocol, with: property)
