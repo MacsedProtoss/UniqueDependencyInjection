@@ -9,11 +9,11 @@ import Foundation
 
 class UDIManager {
     
-    static func linkObj<T>(in context:UDIContext) -> T? {
+    static func linkObj<aProtocol>(in context:UDIContext) -> aProtocol? {
         return findObjInWholeTree(in: context)
     }
     
-    static func bindObj<T:UDIObject>(in context:UDIContext, for aProtocol:Any, with property:T) {
+    static func bindObj<Property:UDIObject>(in context:UDIContext, for aProtocol:Any, with property:Property) {
         context.bind(property: property, aProtocol: aProtocol)
     }
     
@@ -25,20 +25,20 @@ class UDIManager {
         context.remove(aProtocol)
     }
     
-    static private func findObjInWholeTree<T>(in parentContext:UDIContext) -> T?{
+    static private func findObjInWholeTree<aProtocol>(in parentContext:UDIContext) -> aProtocol?{
         var queue = Queue<UDIContext>()
-        queue.push(parentContext)
+        queue.In(parentContext)
         
         while queue.remainCount > 0{
-            guard let context = queue.pop() else{
+            guard let context = queue.Out() else{
                 continue
             }
             
-            if let result : T = context.link() {
+            if let result : aProtocol = context.link() {
                 return result
             }else{
                 for subContext in context.subContexts{
-                    queue.push(subContext)
+                    queue.In(subContext)
                 }
             }
         }
@@ -47,17 +47,17 @@ class UDIManager {
     
     static private func findContextInWholeTree(in parentContext:UDIContext,for tag:String) -> UDIContext! {
         var queue = Queue<UDIContext>()
-        queue.push(parentContext)
+        queue.In(parentContext)
         
         while queue.remainCount > 0 {
-            guard let context = queue.pop() else{
+            guard let context = queue.Out() else{
                 continue
             }
             if let result = findContext(in: context, for: tag){
                 return result
             }else{
                 for subContext in context.subContexts{
-                    queue.push(subContext)
+                    queue.In(subContext)
                 }
             }
         }

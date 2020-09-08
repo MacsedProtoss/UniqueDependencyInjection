@@ -53,16 +53,16 @@ extension UDIObject{
     ///获取实现Protocol的实例并将其赋值给Property **需要声明该变量所遵循的协议**
     ///
     ///注意，property的引用类型weak/strong会影响到实例的生命周期
-    public func UDILink<T>(property:inout T?){
-        usageCheck(T.self)
+    public func UDILink<aProtocol>(property:inout aProtocol?){
+        usageCheck(aProtocol.self)
         if (self.attachedContext != nil){
-            guard let _property : T = UDIManager.linkObj(in: self.attachedContext!) else {
+            guard let _property : aProtocol = UDIManager.linkObj(in: self.attachedContext!) else {
                 property = nil
                 return
             }
             property = _property
         }else{
-            guard let _property : T = UDIManager.linkObj(in: AppContext ) else {
+            guard let _property : aProtocol = UDIManager.linkObj(in: AppContext ) else {
                 property = nil
                 return
             }
@@ -73,15 +73,15 @@ extension UDIObject{
     ///获取实现Protocol的实例
     ///
     ///注意，使用此方法获取实例时，应直接在使用后调用其能力而非将其引用存储下来
-    public func UDILinkInLine<T>(_ aProtocol:T.Type) -> T?{
-        usageCheck(T.self)
+    public func UDILinkInLine<aProtocol>(_:aProtocol.Type) -> aProtocol?{
+        usageCheck(aProtocol.self)
         if (self.attachedContext != nil){
-            guard let _property : T = UDIManager.linkObj(in: self.attachedContext!) else {
+            guard let _property : aProtocol = UDIManager.linkObj(in: self.attachedContext!) else {
                 return nil
             }
             return _property
         }else{
-            guard let _property : T = UDIManager.linkObj(in: AppContext) else {
+            guard let _property : aProtocol = UDIManager.linkObj(in: AppContext) else {
                 return nil
             }
             return _property
@@ -91,9 +91,9 @@ extension UDIObject{
     ///注册实现Protocol的实例
     ///
     ///注册的上下文是调用本方法的实例的Context，若之前注册在其他上下文则会被从旧上下文移除
-    public func UDIBind<T:UDIObject>(property: T,aProtocol:Any){
+    public func UDIBind<Property:UDIObject>(property: Property,aProtocol:Any){
         usageCheck(aProtocol)
-        if let _property : T = UDIManager.linkObj(in: AppContext){
+        if let _property : Property = UDIManager.linkObj(in: AppContext){
             UDIManager.cancelBind(in: _property.attachedContext ?? AppContext, for: aProtocol)
         }
         if (self.attachedContext != nil){
@@ -106,7 +106,7 @@ extension UDIObject{
     ///多重注册实现Protocol的实例
     ///
     ///注册的上下文是调用本方法的实例的Context，可以同时注册在多个上下文，**可能引起非预期效果**
-    public func UDIMultiBind<T:UDIObject>(property: T,aProtocol:Any){
+    public func UDIMultiBind<Property:UDIObject>(property: Property,aProtocol:Any){
         usageCheck(aProtocol)
         if (self.attachedContext != nil){
             UDIManager.bindObj(in: self.attachedContext!, for: aProtocol, with: property)
@@ -157,13 +157,13 @@ extension UDIObject{
 ///
 ///使用包装属性快速从**App Context**里面获取依赖
 @propertyWrapper
-public struct UDIGLink<T> {
-    public var wrappedValue : T? {
+public struct UDIGLink<aProtocol> {
+    public var wrappedValue : aProtocol? {
         get{
             return UDIManager.linkObj(in: AppContext)
         }
     }
-    public init(_ aProtocol:T.Type) {
+    public init(_:aProtocol.Type) {
         
     }
 }
