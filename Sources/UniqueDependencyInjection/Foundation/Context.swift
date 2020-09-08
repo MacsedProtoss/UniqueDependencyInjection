@@ -13,7 +13,7 @@ public class UDIContext {
     private var dependencies = WeakValueDictionary<String,UDIObject>()
     internal var subContexts = [UDIContext]()
     
-    internal func bind<T:UDIObject>(property : T, aProtocol : Any){
+    internal func bind<Property:UDIObject>(property : Property, aProtocol : Any){
         dependencies[self.wrappedKey(aProtocol)] = property
     }
     
@@ -21,9 +21,9 @@ public class UDIContext {
         dependencies.removeValue(forKey: self.wrappedKey(aProtocol))
     }
     
-    internal func link<T>() -> T? {
-        if dependencies[self.wrappedKey(T.self)] != nil{
-            if let obj = dependencies[self.wrappedKey(T.self)] as? T{
+    internal func link<aProtocol>() -> aProtocol? {
+        if dependencies[self.wrappedKey(aProtocol.self)] != nil{
+            if let obj = dependencies[self.wrappedKey(aProtocol.self)] as? aProtocol{
                 return obj
             }else{
                 return nil

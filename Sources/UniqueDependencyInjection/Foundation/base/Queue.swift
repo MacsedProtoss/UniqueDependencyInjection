@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct Queue<T> {
-    private var storage = [T]()
+struct Queue<Element> {
+    private var storage = [Element]()
     
-    mutating func push(_ element:T){
+    mutating func In(_ element:Element){
         storage.append(element)
     }
     
-    mutating func pop() -> T!{
+    mutating func Out() -> Element!{
         let output = storage.first
         if (storage.count > 0){
             storage.removeFirst()
