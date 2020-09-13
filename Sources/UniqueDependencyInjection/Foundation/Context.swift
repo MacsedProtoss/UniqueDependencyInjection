@@ -72,5 +72,3 @@ public class UDIContext {
     }
     
 }
-
-let AppContext = UDIContext(withTag: "AppContext")
