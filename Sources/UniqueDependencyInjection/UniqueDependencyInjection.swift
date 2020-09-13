@@ -167,3 +167,8 @@ public struct UDIGLink<aProtocol> {
         
     }
 }
+
+///UDI应用上下文
+///
+///全应用的顶层Context
+public let AppContext = UDIContext(withTag: "AppContext")
