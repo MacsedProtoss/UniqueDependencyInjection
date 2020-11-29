@@ -34,17 +34,21 @@ public protocol UDIObject : AnyObject {
     ///这个属性用于内部实现，正常使用应当调用attachedContext
     var _attachedContext : UDIContext? {get set}
     
+    init()
 }
 
 extension UDIObject{
+    
+    init(){
+        self.init()
+    }
     ///使用Context来初始化实例
     ///
     ///初始化后会直接调用didAttachContext
-    public convenience init(withContext context: UDIContext){
+    public init(withContext context: UDIContext){
         self.init()
         self.attachedContext = context
     }
-    
     
     ///目前关联的上下文 UDIContext
     ///

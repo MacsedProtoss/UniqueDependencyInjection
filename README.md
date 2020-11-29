@@ -19,6 +19,9 @@ Swift 依赖注入
 
 ### 前置条件
 正常使用时，应当confirm to UDIObject这一协议
+
+并且添加**required init()**
+
 ```Swift
 protocol myProtocol{
     func myFunc()
@@ -34,7 +37,13 @@ class myClass : UDIObject,myProtocol{
     func myFunc(){
         //这是你的协议所定义的能力
     }
+    
+    required init(){
+    
+    }
 }
+
+let myC = myClass(withContext:YOUR_CONTEXT) //支持初始化时直接设定Context
 ```
 
 ### Bind
