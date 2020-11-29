@@ -37,6 +37,15 @@ public protocol UDIObject : AnyObject {
 }
 
 extension UDIObject{
+    ///使用Context来初始化实例
+    ///
+    ///初始化后会直接调用didAttachContext
+    public convenience init(withContext context: UDIContext){
+        self.init()
+        self.attachedContext = context
+    }
+    
+    
     ///目前关联的上下文 UDIContext
     ///
     ///修改后会自动调用didAttachContext
