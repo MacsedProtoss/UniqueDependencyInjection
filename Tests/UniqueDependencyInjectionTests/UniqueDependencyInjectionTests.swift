@@ -36,4 +36,8 @@ class myClass : UDIObject,myProtocol{
     }
     
     var _attachedContext: UDIContext?
+    
+    required init() {
+        
+    }
 }
